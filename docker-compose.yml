@@ -1,9 +1,19 @@
 version: '3'
-services: 
-  web: #name of project
-    build: . #image
-    ports: 
-      - "3000:3000"
-    volumes:
-      - /app/node_modules #cannot reference node_modules that don't exist in local machine outside
-      - .:/app #map app folder in curr folder inside to curr folder outside   
+services:
+    web: #name of project
+        build: #build inside curr directory (BUT HAS NO DOCKERFILE!)
+            context: . #where we want files pulled FROM (build context)
+            dockerfile: Dockerfile.dev #location of construction of image
+        ports:
+            - '3000:3000'
+        volumes:
+            - /app/node_modules #cannot reference node_modules that don't exist in local machine outside
+            - .:/app #map app folder in curr folder inside to curr folder outside
+    tests:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - /app/node_modules
+            - .:/app
+        command: ['npm', 'run', 'test'] #overwrite default command
