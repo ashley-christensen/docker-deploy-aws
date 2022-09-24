@@ -2,8 +2,20 @@ sudo: required
 services:
     - docker
 
-before_install:
+before_install: #inital image
     - docker build -t ashleychristensen/docker-frontend -f Dockerfile.dev .
 
-script: 
-  - docker run -e CI=true ashleychristensen/docker-frontend npm run test
+script: #running tests on image
+    - docker run -e CI=true ashleychristensen/docker-frontend npm run test
+
+deploy: #deploy off to AWS
+    provider: elasticbeanstalk
+    region: 'us-west-1'
+    app: 'docker-frontend'
+    env: 'Dockerfrontend-env'
+    bucket_name: elasticbeanstalk-us-west-1-473310023747 #s3 bucket
+    bucket_path: 'docker-frontend' #same as app
+    on:
+        branch: master #when master gets new code, deploy
+    access_key_id: '$AWS_ACCESS_KEY'
+    secret_access_key: '$AWS_SECRET_KEY'
