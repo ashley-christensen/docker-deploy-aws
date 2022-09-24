@@ -17,5 +17,5 @@ deploy: #deploy off to AWS
     bucket_path: 'docker-frontend' #same as app
     on:
         branch: master #when master gets new code, deploy
-    access_key_id: "$AWS_ACCESS_KEY"
-    secret_access_key: "$AWS_SECRET_KEY"
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
