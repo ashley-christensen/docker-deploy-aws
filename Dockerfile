@@ -17,6 +17,7 @@ FROM nginx
 # only want app/build from previous block for production
 # previous block is complete, FROM = new block
 
+EXPOSE 80 
 COPY  --from=builder /app/build /usr/share/nginx/html
 #copy from other phase, location, copy TO: /usr/share/nginx/html <--nginx config, see docs
 #copy build folder to nginx container
